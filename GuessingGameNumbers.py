@@ -1,5 +1,5 @@
 import random
-import PySimpleGUI as psg
+import FreeSimpleGUI as psg
 import wallet
 
 psg.theme('LightBlue7')
@@ -67,9 +67,7 @@ def number_guessing_popup():
                 window['feedback'].update(f"Correct! The number was {number_to_guess}.")
                 window['attempts'].update(f"You guessed it in {attempts} attempts!")
                 window['feedback'].update(f"Congratulations! You've won 5 coins!")
-                coins = wallet.get_coins()
-                coins += 5
-                wallet.save_coins(coins)
+                wallet.adjust_coins(5)
                 break  
 
             # Updates how many attempts the player has left

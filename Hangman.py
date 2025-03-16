@@ -1,5 +1,5 @@
 import random
-import PySimpleGUI as psg
+import FreeSimpleGUI as psg
 import wallet
 
 psg.theme('LightBlue7')
@@ -84,9 +84,7 @@ def hangman_popup():
             if current_display == word:
                 window['result'].update(f"Well done! You got the word right. You have won {coins + 20} coins!")
                 window['guess'].update('') 
-                coins = wallet.get_coins()
-                coins += 20
-                wallet.save_coins(coins)
+                wallet.adjust_coins(20)
                 break
 
             window['guess'].update('')  

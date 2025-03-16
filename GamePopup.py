@@ -1,24 +1,19 @@
-import PySimpleGUI as psg
+import FreeSimpleGUI as psg
 import GameEngine
 import wallet 
 
 psg.theme('LightBlue7')
 
-# Track if a game is unlocked or not
-unlocked_games = {
-    "Number Guessing Game": True,
-    "Word Guessing Game": False,
-    "Hangman": False,
-}
+
 
 # Making the game popup layout
 def create_game_layout(coins):
     layout = [
         [psg.Text("Games", font=('Bahnschrift Semibold Condensed', 25), justification='center', expand_x=True)],
         [psg.Column([  
-            [psg.Button("Number Guessing Game\n(Free)" if not unlocked_games["Number Guessing Game"] else "Number Guessing Game\nUnlocked", size=(20, 2), key="Number Guessing Game")],
-            [psg.Button("Word Guessing Game\nCost: 10" if not unlocked_games["Word Guessing Game"] else "Word Guessing Game\nUnlocked", size=(20, 2), key="Word Guessing Game", disabled = coins < 10)],
-            [psg.Button("Hangman\nCost: 25" if not unlocked_games["Hangman"] else "Hangman\nUnlocked", size=(20, 2), key="Hangman", disabled = coins < 25)],
+            [psg.Button("Number Guessing Game\n(Free)" if not wallet.is_game_unlocked("Number Guessing Game") else "Number Guessing Game\nUnlocked", size=(20, 2), key="Number Guessing Game")],
+            [psg.Button("Word Guessing Game\nCost: 10" if not wallet.is_game_unlocked("Word Guessing Game") else "Word Guessing Game\nUnlocked", size=(20, 2), key="Word Guessing Game", disabled = coins < 10 and not wallet.is_game_unlocked("Word Guessing Game") )],
+            [psg.Button("Hangman\nCost: 25" if not wallet.is_game_unlocked("Hangman") else "Hangman\nUnlocked", size=(20, 2), key="Hangman", disabled = coins < 25 and not wallet.is_game_unlocked("Hangman"))],
         ], justification='center')]
     ]
     return layout
@@ -68,10 +63,11 @@ while True:
     # If the Word Guessing Game Button is Pressed    
     elif event == "Word Guessing Game" or event == "Word Guessing Game\nUnlocked":
         # If the game is not unlocked
-        if not unlocked_games["Word Guessing Game"]:
+        if not wallet.is_game_unlocked("Word Guessing Game"):
             response = custom_popup("Word Guessing Game costs 10 coins to unlock. Would you like to unlock this game?")
             if response == 'Yes':
-                unlocked_games["Word Guessing Game"] = True
+                wallet.adjust_coins(-10)
+                wallet.unlock_game("Word Guessing Game")
                 psg.popup("You have unlocked the Word Guessing Game!")
                 # Updates the game to say unlocked
                 window["Word Guessing Game"].update("Word Guessing Game\nUnlocked")
@@ -83,10 +79,11 @@ while True:
     # If the Word Guessing Game Button is Pressed
     elif event == "Hangman" or event == "Hangman\nUnlocked":
         # If the game is not unlocked
-        if not unlocked_games["Hangman"]:  
-            response = custom_popup("Hangman costs 55 coins to unlock. Would you like to unlock this game?")
+        if not wallet.is_game_unlocked("Hangman"):  
+            response = custom_popup("Hangman costs 25 coins to unlock. Would you like to unlock this game?")
             if response == 'Yes':
-                unlocked_games["Hangman"] = True
+                wallet.adjust_coins(-25)
+                wallet.unlock_game("Hangman")
                 psg.popup("You have unlocked Hangman!")
                 # Updates the game to say unlocked
                 window["Hangman"].update("Hangman\nUnlocked")

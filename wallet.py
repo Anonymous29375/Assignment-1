@@ -1,23 +1,52 @@
 import json
 
-WALLET_FILENAME = 'wallet.json'
+WALLET_FILENAME = "wallet.json"
+
 
 def create_if_not_exist() -> None:
     # Make sure wallet file exists
     try:
-        with open(WALLET_FILENAME, 'x') as file:
-            file.write('{ "coins": 5 }')
+        with open(WALLET_FILENAME, "x") as file:
+            file.write('{ "coins": 5, "unlocked_games": [] }')
     except FileExistsError:
         # Ignore if file already exists
         pass
 
-def get_coins() -> float:
-    with open(WALLET_FILENAME, 'r') as file:
-        data = json.load(file)
-        return float(data['coins'])
-    
-def save_coins(coins: float) -> None:
-    with open(WALLET_FILENAME, 'w') as file:
-        wallet_data = {}
-        wallet_data['coins'] = coins
-        json.dump(wallet_data, file)
+
+def read_wallet() -> dict:
+    with open(WALLET_FILENAME, "r") as file:
+        wallet = json.load(file)
+        return wallet
+
+
+def get_coins() -> int:
+    wallet = read_wallet()
+    return int(wallet["coins"])
+
+
+def save_coins(coins: int) -> None:
+    wallet = read_wallet()
+    with open(WALLET_FILENAME, "w") as file:
+        wallet["coins"] = coins
+        json.dump(wallet, file)
+
+
+def adjust_coins(coins: int) -> int:
+    total_coins = get_coins()
+    total_coins += coins
+    save_coins(total_coins)
+
+
+def is_game_unlocked(game: str) -> bool:
+    wallet = read_wallet()
+    return game in wallet["unlocked_games"]
+
+
+def unlock_game(game: str) -> list:
+    wallet = read_wallet()
+    with open(WALLET_FILENAME, "w") as file:
+        wallet["unlocked_games"].append(game)
+
+        # Make sure all game names are distinct
+        wallet["unlocked_games"] = list(set(wallet["unlocked_games"]))
+        json.dump(wallet, file)

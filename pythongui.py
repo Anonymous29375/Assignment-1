@@ -1,4 +1,4 @@
-import PySimpleGUI as psg
+import FreeSimpleGUI as psg
 import subprocess
 import wallet
 
@@ -6,11 +6,6 @@ psg.theme('LightBlue7')
 
 # Create the wallet on disk if it does not already exist
 wallet.create_if_not_exist()
-
-coins = wallet.get_coins()
-
-wallet.save_coins(coins)
-
 
 # Layout of the main window
 layout = [
