@@ -1,5 +1,6 @@
 import FreeSimpleGUI as psg
 import random
+import wallet
 
 psg.theme('LightBlue7')
 
@@ -24,8 +25,8 @@ layout = [
     [
         psg.Button('Luck Box\nCost: 5 coins', size=(15, 2)), psg.Text(text='', size=(5, 1)),
         psg.Button('Take A Chance Box\nCost: 7 coins', size=(15, 2)), psg.Text(text='', size=(5, 1)),
-        psg.Button('Extreme Luck Box\nCost: 50 coins', size=(15, 2)), psg.Text(text='', size=(5, 1)),
-        psg.Button('Temporary Box\nCost: 25 coins', size=(15, 2))
+        psg.Button('Extreme Luck Box\nCost: 25 coins', size=(15, 2)), psg.Text(text='', size=(5, 1)),
+        psg.Button('Temporary Box\nCost: 15 coins', size=(15, 2))
     ],
 ]
 
@@ -57,6 +58,7 @@ while True:
 
         if confirm_event == 'Confirm':
             psg.popup(f"You bought the Luck Box!\nOutcome: {outcome}", title="Purchase Confirmed", button_color=('black', 'lightblue'))
+            wallet.adjust_coins(-5)
         else:
             psg.popup("Purchase canceled!", title="Purchase Canceled", button_color=('black', 'darkblue'))
 
@@ -79,11 +81,12 @@ while True:
 
         if confirm_event == 'Confirm':
             psg.popup(f"You bought the Take A Chance Box!\nOutcome: {outcome}", title="Purchase Confirmed", button_color=('black', 'lightblue'))
+            wallet.adjust_coins(-7)
         else:
             psg.popup("Purchase canceled!", title="Purchase Canceled", button_color=('black', 'lightblue'))
     
     # If the Extreme Luck Box Button is Pressed
-    elif event == 'Extreme Luck Box\nCost: 50 coins':
+    elif event == 'Extreme Luck Box\nCost: 25 coins':
         outcome = outcome_for_extreme_luck_box()
 
         # Window for confirmation of the purchase
@@ -101,11 +104,12 @@ while True:
 
         if confirm_event == 'Confirm':
             psg.popup(f"You bought the Extreme Luck Box!\nOutcome: {outcome}", title="Purchase Confirmed", button_color=('black', 'lightblue'))
+            wallet.adjust_coins(-25)
         else:
             psg.popup("Purchase canceled!", title="Purchase Canceled", button_color=('black', 'lightblue'))
 
     # If the Temporary Box Button is Pressed
-    elif event == 'Temporary Box\nCost: 25 coins':
+    elif event == 'Temporary Box\nCost: 15 coins':
         outcome = outcome_for_temporary_box()
 
         # Window for confirmation of the purchase
@@ -123,6 +127,7 @@ while True:
 
         if confirm_event == 'Confirm':
             psg.popup(f"You bought the Temporary Box!\nOutcome: {outcome}", title="Purchase Confirmed", button_color=('black', 'lightblue'))
+            wallet.adjust_coins(-15)
         else:
             psg.popup("Purchase canceled!", title="Purchase Canceled", button_color=('black', 'lightblue'))
 
