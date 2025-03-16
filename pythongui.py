@@ -7,13 +7,9 @@ psg.theme('LightBlue7')
 # Create the wallet on disk if it does not already exist
 wallet.create_if_not_exist()
 
-money = wallet.get_money()
-print(money)
+coins = wallet.get_coins()
 
-money += 20
-wallet.save_money(money)
-money = wallet.get_money()
-print(money)
+wallet.save_coins(coins)
 
 
 # Layout of the main window

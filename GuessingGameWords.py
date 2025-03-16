@@ -1,5 +1,6 @@
 import random
 import PySimpleGUI as psg
+import wallet
 
 psg.theme('LightBlue7')
 
@@ -74,6 +75,9 @@ def word_guessing_popup():
             if guess == word:
                 window['result'].update(f"Congratulations! You guessed the word '{word}' correctly! You have won 10 coins!")
                 window['hint'].update("")
+                coins = wallet.get_coins()
+                coins += 10
+                wallet.save_coins(coins)
                 break  
             else:
                 # If player guesses a wrong word
