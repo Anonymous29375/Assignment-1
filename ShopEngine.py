@@ -114,7 +114,7 @@ while True:
 
         # Window for confirmation of the purchase
         layout_confirm = [
-            [psg.Text("Outcomes: Win 50 coins, Win 50 coins, or unlock a free game.")],
+            [psg.Text("Outcomes: Win 50 coins, or unlock a free game.")],
             [psg.Image('LuckBox.png', subsample=4)],  
             [psg.Text("Please confirm your purchase.")],
             [psg.Button('Confirm'), psg.Button('Cancel')]
