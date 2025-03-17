@@ -14,7 +14,7 @@ def create_if_not_exist() -> None:
     # Make sure wallet file exists
     try:
         with open(WALLET_FILENAME, "x") as file:
-            file.write('{ "coins": 50, "unlocked_games": [], "win_ten_coins": false }')
+            file.write('{ "coins": 15, "unlocked_games": [], "win_ten_coins": false }')
     except FileExistsError:
         # Ignore if file already exists
         pass
