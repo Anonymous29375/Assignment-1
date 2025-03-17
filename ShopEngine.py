@@ -59,8 +59,6 @@ while True:
         if confirm_event == 'Confirm':
             psg.popup(f"You bought the Luck Box!\nOutcome: {outcome}", title="Purchase Confirmed", button_color=('black', 'lightblue'))
             wallet.adjust_coins(-5)
-        else:
-            psg.popup("Purchase canceled!", title="Purchase Canceled", button_color=('black', 'darkblue'))
 
     # If the Take a Chance Box Button is Pressed
     elif event == 'Take A Chance Box\nCost: 7 coins':
@@ -82,8 +80,6 @@ while True:
         if confirm_event == 'Confirm':
             psg.popup(f"You bought the Take A Chance Box!\nOutcome: {outcome}", title="Purchase Confirmed", button_color=('black', 'lightblue'))
             wallet.adjust_coins(-7)
-        else:
-            psg.popup("Purchase canceled!", title="Purchase Canceled", button_color=('black', 'lightblue'))
     
     # If the Extreme Luck Box Button is Pressed
     elif event == 'Extreme Luck Box\nCost: 25 coins':
@@ -105,8 +101,6 @@ while True:
         if confirm_event == 'Confirm':
             psg.popup(f"You bought the Extreme Luck Box!\nOutcome: {outcome}", title="Purchase Confirmed", button_color=('black', 'lightblue'))
             wallet.adjust_coins(-25)
-        else:
-            psg.popup("Purchase canceled!", title="Purchase Canceled", button_color=('black', 'lightblue'))
 
     # If the Temporary Box Button is Pressed
     elif event == 'Temporary Box\nCost: 15 coins':
@@ -128,7 +122,5 @@ while True:
         if confirm_event == 'Confirm':
             psg.popup(f"You bought the Temporary Box!\nOutcome: {outcome}", title="Purchase Confirmed", button_color=('black', 'lightblue'))
             wallet.adjust_coins(-15)
-        else:
-            psg.popup("Purchase canceled!", title="Purchase Canceled", button_color=('black', 'lightblue'))
 
 window.close()

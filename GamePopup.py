@@ -10,6 +10,7 @@ psg.theme('LightBlue7')
 def create_game_layout(coins):
     layout = [
         [psg.Text("Games", font=('Bahnschrift Semibold Condensed', 25), justification='center', expand_x=True)],
+        [psg.Image('GameImage.png', subsample=1)], 
         [psg.Column([  
             [psg.Button("Number Guessing Game\n(Free)" if not wallet.is_game_unlocked("Number Guessing Game") else "Number Guessing Game\nUnlocked", size=(20, 2), key="Number Guessing Game")],
             [psg.Button("Word Guessing Game\nCost: 10" if not wallet.is_game_unlocked("Word Guessing Game") else "Word Guessing Game\nUnlocked", size=(20, 2), key="Word Guessing Game", disabled = coins < 10 and not wallet.is_game_unlocked("Word Guessing Game") )],
