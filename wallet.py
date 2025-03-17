@@ -14,7 +14,7 @@ def create_if_not_exist() -> None:
     # Make sure wallet file exists
     try:
         with open(WALLET_FILENAME, "x") as file:
-            file.write('{ "coins": 5, "unlocked_games": [] }')
+            file.write('{ "coins": 50, "unlocked_games": [], "win_ten_coins": false }')
     except FileExistsError:
         # Ignore if file already exists
         pass
@@ -48,6 +48,15 @@ def adjust_coins(coins: int) -> int:
     save_coins(total_coins)
     return total_coins
 
+def has_win_ten_coins():
+    wallet = read_wallet()
+    return wallet["win_ten_coins"]
+
+def set_win_ten_coins(can_win: bool):
+    wallet = read_wallet()
+    with open(WALLET_FILENAME, "w") as file:
+        wallet["win_ten_coins"] = can_win
+        json.dump(wallet, file)
 
 def is_game_unlocked(game: str) -> bool:
     wallet = read_wallet()

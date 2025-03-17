@@ -58,7 +58,7 @@ layout = [
         psg.Button('Luck Box\nCost: 5 coins\nYou need 13 coins to buy', key='luck_box', size=(20, 3), disabled = coins < 13), psg.Text(text='', size=(5, 1)),
         psg.Button('Take A Chance Box\nCost: 7 coins\nYou need 27 coins to buy', size=(20, 3), key='take_a_chance', disabled = coins < 27), psg.Text(text='', size=(5, 1)),
         psg.Button('Extreme Luck Box\nCost: 25 coins\nYou need 25 coins to buy', size=(20, 3), key = 'extreme_luck', disabled = coins < 25), psg.Text(text='', size=(5, 1)),
-        psg.Button('Temporary Box\nCost: 15 coins\nYou need 15 coins to buy', size=(20, 3), key = 'temporary_box', disabled = coins < 15)
+        psg.Button('Temporary Box\nCost: 15 coins\nYou need 15 coins to buy', size=(20, 3), key = 'temporary_box', disabled = coins < 15 or wallet.has_win_ten_coins())
     ],
 ]
 
@@ -148,7 +148,7 @@ while True:
 
         # Window for confirmation of the purchase
         layout_confirm = [
-            [psg.Text("Outcomes: Gain an extra 10 coins if you win your next game.")],
+            [psg.Text("Outcome: Gain an extra 10 coins if you win your next game.")],
             [psg.Image('LuckBox.png', subsample=4)],  
             [psg.Text("Please confirm your purchase.")],
             [psg.Button('Confirm'), psg.Button('Cancel')]
@@ -162,6 +162,8 @@ while True:
         if confirm_event == 'Confirm':
             psg.popup(f"You bought the Temporary Box!\nOutcome: {outcome}", title="Purchase Confirmed", button_color=('black', 'lightblue'))
             coins = wallet.adjust_coins(-15)
+            wallet.set_win_ten_coins(True)
             window['available_coins'].update(f'You have {coins} coins')
+            window['temporary_box'].update(disabled=True)
 
 window.close()
