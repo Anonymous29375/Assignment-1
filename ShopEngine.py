@@ -4,6 +4,8 @@ import wallet
 
 psg.theme('LightBlue7')
 
+coins = wallet.get_coins()
+
 # Get the outcome for each box
 def outcome_for_luck_box():
     return random.choice(["Gain 10 coins", "Lose 7 coins"])
@@ -21,12 +23,12 @@ def outcome_for_temporary_box():
 layout = [
     [psg.Text('Welcome to the shop!', font=('Bahnschrift Semibold Condensed', 25), size=20, expand_x=True, justification='center')],
     [psg.Image('StoreImage.png', expand_x=True, expand_y=True)],
-    [psg.Text('')],
+    [psg.Text(f'You have {coins} coins', font=('Bahnschrift Semibold Condensed', 20), size=20, expand_x=True, justification='center')],
     [
-        psg.Button('Luck Box\nCost: 5 coins', size=(15, 2)), psg.Text(text='', size=(5, 1)),
-        psg.Button('Take A Chance Box\nCost: 7 coins', size=(15, 2)), psg.Text(text='', size=(5, 1)),
-        psg.Button('Extreme Luck Box\nCost: 25 coins', size=(15, 2)), psg.Text(text='', size=(5, 1)),
-        psg.Button('Temporary Box\nCost: 15 coins', size=(15, 2))
+        psg.Button('Luck Box\nCost: 5 coins', size=(15, 2), disabled = coins < 5), psg.Text(text='', size=(5, 1)),
+        psg.Button('Take A Chance Box\nCost: 7 coins', size=(15, 2),  disabled = coins < 7), psg.Text(text='', size=(5, 1)),
+        psg.Button('Extreme Luck Box\nCost: 25 coins', size=(15, 2), disabled = coins < 25), psg.Text(text='', size=(5, 1)),
+        psg.Button('Temporary Box\nCost: 15 coins', size=(15, 2), disabled = coins < 15)
     ],
 ]
 
