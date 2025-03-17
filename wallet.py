@@ -1,6 +1,13 @@
 import json
+import os
 
 WALLET_FILENAME = "wallet.json"
+
+def reset():
+    if os.path.isfile(WALLET_FILENAME):
+        os.remove(WALLET_FILENAME)
+
+    create_if_not_exist()
 
 
 def create_if_not_exist() -> None:
