@@ -34,7 +34,12 @@ def save_coins(coins: int) -> None:
 def adjust_coins(coins: int) -> int:
     total_coins = get_coins()
     total_coins += coins
+
+    if total_coins < 0:
+        total_coins = 0
+
     save_coins(total_coins)
+    return total_coins
 
 
 def is_game_unlocked(game: str) -> bool:
