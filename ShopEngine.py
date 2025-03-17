@@ -32,10 +32,17 @@ def outcome_for_take_a_chance_box():
 def outcome_for_extreme_luck_box():
     choice = random.choice(["Win 50 coins", "Unlock a free game"])
 
+    if wallet.are_all_games_unlocked():
+        choice = random.choice(["Win 50 coins", "No win"])
+
     if choice == "Win 50 coins":
         wallet.adjust_coins(50)
     else:
-        wallet.adjust_coins(0)
+        if not wallet.is_game_unlocked('Hangman'):
+            wallet.unlock_game('Hangman')
+        elif not wallet.is_game_unlocked('Word Guessing Game'):
+            wallet.unlock_game('Word Guessing Game')
+            
 
     return choice
 
@@ -112,9 +119,14 @@ while True:
     elif event == 'extreme_luck':
         outcome = outcome_for_extreme_luck_box()
 
+        msg = "Outcomes: Win 50 coins, or unlock a free game."
+        if wallet.are_all_games_unlocked():
+            msg = "Outcome: Win 50 coins or no win."
+
+
         # Window for confirmation of the purchase
         layout_confirm = [
-            [psg.Text("Outcomes: Win 50 coins, or unlock a free game.")],
+            [psg.Text(msg)],
             [psg.Image('LuckBox.png', subsample=4)],  
             [psg.Text("Please confirm your purchase.")],
             [psg.Button('Confirm'), psg.Button('Cancel')]

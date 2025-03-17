@@ -53,6 +53,10 @@ def is_game_unlocked(game: str) -> bool:
     wallet = read_wallet()
     return game in wallet["unlocked_games"]
 
+def are_all_games_unlocked() -> bool:
+    wallet = read_wallet()
+    return 'Word Guessing Game' in wallet["unlocked_games"] and 'Hangman' in wallet["unlocked_games"]
+
 
 def unlock_game(game: str) -> list:
     wallet = read_wallet()
