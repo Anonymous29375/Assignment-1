@@ -68,6 +68,12 @@ def number_guessing_popup():
                 window['attempts'].update(f"You guessed it in {attempts} attempts!")
                 window['feedback'].update(f"Congratulations! You've won 5 coins!")
                 wallet.adjust_coins(5)
+
+                if wallet.has_win_ten_coins():
+                    wallet.adjust_coins(10)
+                    psg.popup("You have won a bonus 10 coins!")
+                
+                    
                 break  
 
             # Updates how many attempts the player has left
@@ -83,6 +89,7 @@ def number_guessing_popup():
         if event == psg.WIN_CLOSED or event == "Exit":
             break
 
+    wallet.set_win_ten_coins(False)
     window.close()
 
 def start_number_guessing_game():

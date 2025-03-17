@@ -76,6 +76,10 @@ def word_guessing_popup():
                 window['result'].update(f"Congratulations! You guessed the word '{word}' correctly! You have won 10 coins!")
                 window['hint'].update("")
                 wallet.adjust_coins(10)
+
+                if wallet.has_win_ten_coins():
+                    wallet.adjust_coins(10)
+                    psg.popup("You have won a bonus 10 coins!")
                 break  
             else:
                 # If player guesses a wrong word
@@ -97,6 +101,7 @@ def word_guessing_popup():
         if event == psg.WIN_CLOSED or event == "Exit":
             break
 
+    wallet.set_win_ten_coins(False)
     window.close()
 
 # Theme window picker layout

@@ -11,7 +11,7 @@ def create_game_layout(coins):
     layout = [
         [psg.Text("Games", font=('Bahnschrift Semibold Condensed', 25), justification='center', expand_x=True)],
         [psg.Image('GameImage.png', subsample=1)], 
-        [psg.Text(f'You have {coins} coins', font=('Bahnschrift Semibold Condensed', 20), size=20, expand_x=True, justification='center')],
+        [psg.Text(f'You have {coins} coins', font=('Bahnschrift Semibold Condensed', 20), size=20, expand_x=True, justification='center', key = 'available_coins')],
         [psg.Column([  
             [psg.Button("Number Guessing Game\n(Free)" if not wallet.is_game_unlocked("Number Guessing Game") else "Number Guessing Game\nUnlocked", size=(20, 2), key="Number Guessing Game")],
             [psg.Button("Word Guessing Game\nCost: 10" if not wallet.is_game_unlocked("Word Guessing Game") else "Word Guessing Game\nUnlocked", size=(20, 2), key="Word Guessing Game", disabled = coins < 10 and not wallet.is_game_unlocked("Word Guessing Game") )],
@@ -20,12 +20,13 @@ def create_game_layout(coins):
     ]
     return layout
 
-def update_button_disabled():
+def update_screen():
     coins = wallet.get_coins()
     
     # Update button disabled state based on updated coins
     window['Word Guessing Game'].update(disabled=coins < 10)
     window['Hangman'].update(disabled=coins < 25)
+    window['available_coins'].update(f'You have {coins} coins')
 
 # Buttons for unlocking the games
 def custom_popup(message, title="Game Unlock"):
@@ -60,7 +61,7 @@ while True:
     # If the Number Guessing Game Button is Pressed
     if event == "Number Guessing Game" or event == "Number Guessing Game\nUnlocked":
         GameEngine.number_guessing_game()
-        update_button_disabled()
+        update_screen()
 
     # If the Word Guessing Game Button is Pressed    
     elif event == "Word Guessing Game" or event == "Word Guessing Game\nUnlocked":
@@ -76,7 +77,7 @@ while True:
         # If the game is unlocked
         else:
             GameEngine.word_guessing_game()
-            update_button_disabled()  
+            update_screen()  
 
     # If the Word Guessing Game Button is Pressed
     elif event == "Hangman" or event == "Hangman\nUnlocked":
@@ -92,6 +93,6 @@ while True:
          # If the game is unlocked
         else:
             GameEngine.hangman()  
-            update_button_disabled()
+            update_screen()
 
 window.close()

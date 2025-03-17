@@ -85,6 +85,10 @@ def hangman_popup():
                 window['result'].update(f"Well done! You got the word right. You have won {coins + 20} coins!")
                 window['guess'].update('') 
                 wallet.adjust_coins(20)
+
+                if wallet.has_win_ten_coins():
+                    wallet.adjust_coins(10)
+                    psg.popup("You have won a bonus 10 coins!")
                 break
 
             window['guess'].update('')  
@@ -96,6 +100,7 @@ def hangman_popup():
         window['result'].update(f"Sorry! You've run out of attempts. The word was '{word}'.")
 
     event, values = window.read()
+    wallet.set_win_ten_coins(False)
     window.close()
 
 def start_hangman_game():
